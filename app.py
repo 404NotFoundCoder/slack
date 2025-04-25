@@ -44,13 +44,12 @@ def slack_events():
                         result = response.json()  # 把回傳內容轉成 JSON 字典
                         prediction = result.get("prediction")
                         user_text = f"這是我從圖片中得到的資訊：{prediction}，然後我想說：{user_text}"
-                        response = ai_service.chat(user_text)
+                        response_text = ai_service.chat(user_text)
 
                     except Exception as e:
                         logger.error("Error processing image: %s", e)
                 else:
-                    response = ai_service.chat(user_text)
-                response_text = f"{mention} {response}"
+                    response_text = ai_service.chat(user_text)
 
                 result = slack_service.send_message(channel, response_text)
 
